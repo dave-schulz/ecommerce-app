@@ -6,7 +6,7 @@ import Stripe from 'stripe';
 
 const prisma = new PrismaClient();
 
-export default NextAuth({
+export const authOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   adapter: PrismaAdapter(prisma),
   providers: [
@@ -38,4 +38,6 @@ export default NextAuth({
     },
   },
   debug: process.env.NODE_ENV === 'development',
-});
+};
+
+export default NextAuth(authOptions);
