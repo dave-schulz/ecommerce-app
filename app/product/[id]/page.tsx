@@ -1,13 +1,13 @@
 import { ProductsProps } from '@/app/components/Product';
 import formatPrice from '@/util/price-format';
 import Image from 'next/image';
+import AddCart from './AddCart';
 
 interface ProductProps {
   searchParams: ProductsProps;
 }
 
 const ProductPage = async ({ searchParams }: ProductProps) => {
-  console.log(searchParams);
   return (
     <div className="flex justify-between gap-24 p-12 text-gray-700">
       <Image
@@ -15,6 +15,7 @@ const ProductPage = async ({ searchParams }: ProductProps) => {
         alt={searchParams.name}
         width={600}
         height={600}
+        className="w-full h-96 object-cover rounded-lg"
       />
       <div className="font-medium text-gray-700">
         <h1 className="text-2xl  py-2">{searchParams.name}</h1>
@@ -25,9 +26,7 @@ const ProductPage = async ({ searchParams }: ProductProps) => {
             {searchParams.unit_amount && formatPrice(searchParams.unit_amount)}
           </p>
         </div>
-        <button className="my-12 text-white py-2 px-6 rounded-md bg-teal-700">
-          Add to cart
-        </button>
+        <AddCart {...searchParams} />
       </div>
     </div>
   );

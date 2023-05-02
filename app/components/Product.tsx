@@ -14,7 +14,7 @@ export interface ProductsProps {
   unit_amount: number;
   quantity?: number | 1;
   description: string;
-  features: string;
+  features?: string;
   metadata: MetadataProps;
 }
 
