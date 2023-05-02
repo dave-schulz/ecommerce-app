@@ -1,28 +1,56 @@
 import formatPrice from '@/util/price-format';
 import Image from 'next/image';
+import Link from 'next/link';
 import { FC } from 'react';
 
-interface ProductsProps {
-  name: string;
-  image: string;
-  price: number;
+interface MetadataProps {
+  features: string;
 }
 
-const Product: FC<ProductsProps> = ({ name, image, price }) => {
+export interface ProductsProps {
+  id: string;
+  name: string;
+  image: string;
+  unit_amount: number;
+  quantity?: number | 1;
+  description: string;
+  features: string;
+  metadata: MetadataProps;
+}
+
+const Product: FC<ProductsProps> = ({
+  id,
+  name,
+  image,
+  unit_amount,
+  description,
+  metadata,
+}) => {
+  const { features } = metadata;
+
   return (
-    <div className="text-gray-700">
-      <Image
-        src={image}
-        alt={name}
-        width={800}
-        height={800}
-        className="w-full h-96 object-cover rounded-lg"
-      />
-      <div className="font-medium py-2">
-        <h1>{name}</h1>
-        <h2 className="text-sm text-teal-700">{formatPrice(price)}</h2>
+    <Link
+      href={{
+        pathname: `/product/${id}`,
+        query: { id, name, image, unit_amount, description, features },
+      }}
+    >
+      <div className="text-gray-700">
+        <Image
+          src={image}
+          alt={name}
+          width={800}
+          height={800}
+          className="w-full h-96 object-cover rounded-lg"
+        />
+        <div className="font-medium py-2">
+          <h1>{name}</h1>
+          <h2 className="text-sm text-teal-700">
+            {unit_amount && formatPrice(unit_amount)}
+          </h2>
+        </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
