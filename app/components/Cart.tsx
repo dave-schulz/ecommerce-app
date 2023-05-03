@@ -5,9 +5,14 @@ import { useCartStore } from '@/store';
 import Image from 'next/image';
 import formatPrice from '@/util/price-format';
 import { IoAddCircle, IoRemoveCircle } from 'react-icons/io5';
+import basket from '@/public/images/basket.png';
 
 const Cart: FC = ({}) => {
   const cartStore = useCartStore();
+
+  const totalPrice = cartStore.cart.reduce((acc, item) => {
+    return (acc + item.unit_amount * item.quantity) as number;
+  }, 0);
 
   return (
     <div
@@ -63,9 +68,21 @@ const Cart: FC = ({}) => {
             </div>
           </div>
         ))}
-        <button className="py-2 mt-4 bg-teal-700 w-full rounded-md text-white">
-          Checkout
-        </button>
+
+        {cartStore.cart.length > 0 && (
+          <>
+            <p>Total: {formatPrice(totalPrice)}</p>
+            <button className="py-2 mt-4 bg-teal-700 w-full rounded-md text-white">
+              Checkout
+            </button>
+          </>
+        )}
+        {!cartStore.cart.length && (
+          <div className="flex flex-col items-center gap-12 text-2xl font-medium pt-56 opacity-75">
+            <h1>Uuuuh... The cart is still empty..</h1>
+            <Image src={basket} alt="empty basket" width={200} height={200} />
+          </div>
+        )}
       </div>
     </div>
   );
