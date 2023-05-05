@@ -11,6 +11,7 @@ const stripePromise = loadStripe(
 );
 
 import { FC } from 'react';
+import CheckoutForm from './CheckoutForm';
 
 const Checkout: FC = ({}) => {
   const router = useRouter();
@@ -27,7 +28,6 @@ const Checkout: FC = ({}) => {
       }),
     })
       .then((res) => {
-        console.log(res);
         if (res.status === 403) {
           return router.push('/api/auth/signin');
         }
@@ -39,9 +39,23 @@ const Checkout: FC = ({}) => {
       });
   }, []);
 
+  const options: StripeElementsOptions = {
+    clientSecret,
+    appearance: {
+      theme: 'stripe',
+      labels: 'floating',
+    },
+  };
+
   return (
     <div>
-      <h1>Checkout</h1>
+      {clientSecret && (
+        <div>
+          <Elements options={options} stripe={stripePromise}>
+            <CheckoutForm clientSecret={clientSecret} />
+          </Elements>
+        </div>
+      )}
     </div>
   );
 };
