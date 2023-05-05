@@ -23,16 +23,15 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
-  //Get user
   const userSession = await getServerSession(req, res, authOptions);
   if (!userSession?.user) {
     res.status(403).json({ message: 'Not logged in' });
     return;
   }
-  //Extract the data from the body
+
   const { items, payment_intent_id } = req.body;
   const total = calculateOrderAmount(items);
-  //Create the order data
+
   const orderData = {
     user: { connect: { id: userSession.user?.id } },
     amount: total,
@@ -50,7 +49,6 @@ export default async function handler(
     },
   };
 
-  //Check if the payment intent exists just update the order
   if (payment_intent_id) {
     const current_intent = await stripe.paymentIntents.retrieve(
       payment_intent_id,
@@ -62,7 +60,6 @@ export default async function handler(
         { amount: total },
       );
 
-      //Fetch order with product ids
       const [existing_order, updated_order] = await Promise.all([
         prisma.order.findFirst({
           where: { paymentIntentID: updated_intent.id },

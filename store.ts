@@ -6,6 +6,7 @@ interface CartState {
   isOpen: boolean;
   cart: AddCartProps[];
   toggleCart: () => void;
+  clearCart: () => void;
   addProduct: (item: AddCartProps) => void;
   removeProduct: (item: AddCartProps) => void;
   paymentIntent: string;
@@ -70,6 +71,10 @@ export const useCartStore = create<CartState>()(
       setCheckout: (val) =>
         set((state) => ({
           onCheckout: val,
+        })),
+      clearCart: () =>
+        set((state) => ({
+          cart: [],
         })),
     }),
     { name: 'cart-store' },
