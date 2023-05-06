@@ -20,23 +20,32 @@ const AddCart: FC<AddCartProps> = ({
   unit_amount,
 }) => {
   const cartStore = useCartStore();
-  const [added, setAdded] = useState([]);
+  const [added, setAdded] = useState<boolean>(false);
+
+  const handleAddToCart = () => {
+    cartStore.addProduct({
+      id,
+      name,
+      image,
+      quantity,
+      unit_amount,
+    });
+    setAdded(true);
+
+    setTimeout(() => {
+      setAdded(false);
+    }, 500);
+  };
 
   return (
     <>
       <button
-        onClick={() =>
-          cartStore.addProduct({
-            id,
-            name,
-            image,
-            quantity,
-            unit_amount,
-          })
-        }
-        className="my-12 text-white py-2 px-6 font-medium rounded-md bg-teal-700"
+        onClick={handleAddToCart}
+        disabled={added}
+        className="my-4 btn-primary btn w-full"
       >
-        Add to cart
+        {!added && <span>Add to cart</span>}
+        {added && <span>Adding to cart</span>}
       </button>
     </>
   );
