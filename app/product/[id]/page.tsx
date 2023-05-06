@@ -16,6 +16,7 @@ const ProductPage = async ({ searchParams }: ProductProps) => {
         width={600}
         height={600}
         className="w-full h-96 object-cover rounded-lg"
+        priority={true}
       />
       <div className="font-medium">
         <h1 className="text-2xl py-2">{searchParams.name}</h1>

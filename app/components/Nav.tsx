@@ -16,7 +16,7 @@ const Nav = ({ user }: Session) => {
   return (
     <nav className="flex justify-between items-center py-12">
       <Link href={'/'}>
-        <h1>Styled</h1>
+        <h1 className="font-lobster text-2xl">Styled</h1>
       </Link>
       <ul className="flex items-center gap-8">
         {/* <li>Products</li> */}
@@ -54,6 +54,7 @@ const Nav = ({ user }: Session) => {
                 height={36}
                 className="rounded-full"
                 tabIndex={0}
+                priority={true}
               />
               <ul
                 tabIndex={0}

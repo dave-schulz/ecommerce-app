@@ -3,14 +3,11 @@ import { getServerSession } from 'next-auth';
 import Stripe from 'stripe';
 import { authOptions } from './auth/[...nextauth]';
 import { AddCartProps } from '@/app/product/[id]/AddCart';
-import { ProductsProps } from '@/app/components/Product';
-import { PrismaClient } from '@prisma/client';
+import { prisma } from '@/util/prisma';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
   apiVersion: '2022-11-15',
 });
-
-const prisma = new PrismaClient();
 
 const calculateOrderAmount = (items: AddCartProps[]) => {
   const totalPrice = items.reduce((acc, item) => {
