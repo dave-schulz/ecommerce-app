@@ -1,13 +1,13 @@
 'use client';
 
-// import { useThemeStore } from '@/store';
+import { useThemeStore } from '@/store';
 
 export default function DarkLight() {
-  // const themeStore = useThemeStore();
+  const themeStore = useThemeStore();
 
   return (
     <label className="swap swap-rotate">
-      {/* <input
+      <input
         defaultChecked={themeStore.mode === 'light' ? false : true}
         type="checkbox"
         onClick={() => {
@@ -17,7 +17,7 @@ export default function DarkLight() {
             themeStore.toggleMode('light');
           }
         }}
-      /> */}
+      />
       <>
         <svg
           className="swap-off fill-current w-8 h-8"
